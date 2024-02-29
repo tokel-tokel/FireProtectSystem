@@ -12,4 +12,6 @@ public class DriverManager
     private ArrayList<AutoCloseableWidow> closeableWidows;
     private ArrayList<WashingSystem> washingSystems;
     private Phone phone;
+
+    private ArrayList<Updatable> updatableDevices;
 }
