@@ -1,24 +1,17 @@
 package ru.hse.edu.stalivanov.drivers;
 
-public class BufferedWindow implements Window, Updatable
+import java.util.function.Supplier;
+
+public class BufferedWindow extends BufferedDriver<Boolean> implements Window
 {
-    private Window base;
-    private boolean bufIsOpened;
-
-    public BufferedWindow(Window base)
+    public BufferedWindow(Window window)
     {
-        this.base = base;
-    }
-
-    @Override
-    public void update()
-    {
-        bufIsOpened = base.isOpened();
+        super(window::isOpened, window);
     }
 
     @Override
     public boolean isOpened()
     {
-        return bufIsOpened;
+        return super.get();
     }
 }

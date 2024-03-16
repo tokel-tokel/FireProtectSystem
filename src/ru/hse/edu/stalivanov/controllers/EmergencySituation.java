@@ -1,4 +1,4 @@
-package ru.hse.edu.stalivanov.handlers;
+package ru.hse.edu.stalivanov.controllers;
 
 import ru.hse.edu.stalivanov.DriverManager;
 
@@ -12,7 +12,7 @@ public class EmergencySituation
         this.driverManager = driverManager;
     }
 
-    void turnOn()
+    public void turnOn()
     {
         if(!turnedOn)
         {
@@ -25,7 +25,7 @@ public class EmergencySituation
         turnedOn = true;
     }
 
-    void turnOff()
+    public void turnOff()
     {
         if(turnedOn)
         {

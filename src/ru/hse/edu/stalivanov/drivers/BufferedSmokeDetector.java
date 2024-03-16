@@ -1,24 +1,17 @@
 package ru.hse.edu.stalivanov.drivers;
 
-public class BufferedSmokeDetector implements SmokeDetector, Updatable
-{
-    private SmokeDetector base;
-    private boolean bufIsSmoke;
+import java.util.function.Supplier;
 
-    public BufferedSmokeDetector(SmokeDetector base)
+public class BufferedSmokeDetector extends BufferedDriver<Boolean> implements SmokeDetector
+{
+    public BufferedSmokeDetector(SmokeDetector detector)
     {
-        this.base = base;
+        super(detector::isSmoke, detector);
     }
 
     @Override
     public boolean isSmoke()
     {
-        return bufIsSmoke;
-    }
-
-    @Override
-    public void update()
-    {
-        bufIsSmoke = base.isSmoke();
+        return super.get();
     }
 }

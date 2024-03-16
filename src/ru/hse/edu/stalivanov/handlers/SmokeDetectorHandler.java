@@ -1,10 +1,10 @@
 package ru.hse.edu.stalivanov.handlers;
 
+import ru.hse.edu.stalivanov.controllers.EmergencySituation;
 import ru.hse.edu.stalivanov.drivers.SmokeDetector;
 import ru.hse.edu.stalivanov.drivers.WashingSystem;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 public class SmokeDetectorHandler implements Handler
 {

@@ -2,6 +2,7 @@ package ru.hse.edu.stalivanov;
 
 import ru.hse.edu.stalivanov.drivers.*;
 import java.util.ArrayList;
+import java.util.function.Supplier;
 
 public class DriverManager
 {
@@ -15,6 +16,20 @@ public class DriverManager
     private Phone phone;
 
     private ArrayList<Updatable> updatableDevices;
+
+    public DriverManager()
+    {
+        SmokeDetector detector = new SmokeDetector()
+        {
+            @Override
+            public boolean isSmoke()
+            {
+                return false;
+            }
+        };
+
+        Supplier<Boolean> s = detector::isSmoke;
+    }
 
     public Iterable<Alarm> getAlarms()
     {
