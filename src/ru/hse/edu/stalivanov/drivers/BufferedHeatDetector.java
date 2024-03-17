@@ -1,17 +1,31 @@
 package ru.hse.edu.stalivanov.drivers;
 
-import java.util.function.Supplier;
-
-public class BufferedHeatDetector extends BufferedDriver<HeatMap> implements HeatDetector
+public class BufferedHeatDetector implements HeatDetector, Updatable
 {
+    private BufferedSupplier<HeatMap> bufHeatMap;
+    private Driver driver;
+
     public BufferedHeatDetector(HeatDetector detector)
     {
-        super(detector::getHeatMap, detector);
+        bufHeatMap = new BufferedSupplier<>(detector::getHeatMap);
+        driver = detector;
     }
 
     @Override
     public HeatMap getHeatMap()
     {
-        return super.get();
+        return bufHeatMap.get();
+    }
+
+    @Override
+    public void update()
+    {
+        bufHeatMap.update();
+    }
+
+    @Override
+    public DriverStatus getStatus()
+    {
+        return driver.getStatus();
     }
 }

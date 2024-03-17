@@ -2,15 +2,13 @@ package ru.hse.edu.stalivanov.drivers;
 
 import java.util.function.Supplier;
 
-public class BufferedDriver<T> implements Updatable, Supplier<T>, Driver
+public class BufferedSupplier<T> implements Updatable, Supplier<T>
 {
     private T bufferedData;
     private Supplier<T> baseSupplier;
-    private Driver baseDriver;
 
-    public BufferedDriver(Supplier<T> baseSupplier, Driver baseDriver)
+    public BufferedSupplier(Supplier<T> baseSupplier)
     {
-        this.baseDriver = baseDriver;
         this.baseSupplier = baseSupplier;
     }
 
@@ -24,11 +22,5 @@ public class BufferedDriver<T> implements Updatable, Supplier<T>, Driver
     public T get()
     {
         return bufferedData;
-    }
-
-    @Override
-    public DriverStatus getStatus()
-    {
-        return baseDriver.getStatus();
     }
 }
