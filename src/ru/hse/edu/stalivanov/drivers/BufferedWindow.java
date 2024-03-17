@@ -3,12 +3,12 @@ package ru.hse.edu.stalivanov.drivers;
 public class BufferedWindow implements Window, Updatable
 {
     private BufferedSupplier<Boolean> bufIsOpened;
-    private Driver base;
+    private Driver driver;
 
     public BufferedWindow(Window window)
     {
         bufIsOpened = new BufferedSupplier<>(window::isOpened);
-        base = window;
+        driver = window;
     }
 
     @Override
@@ -26,6 +26,6 @@ public class BufferedWindow implements Window, Updatable
     @Override
     public DriverStatus getStatus()
     {
-        return base.getStatus();
+        return driver.getStatus();
     }
 }
