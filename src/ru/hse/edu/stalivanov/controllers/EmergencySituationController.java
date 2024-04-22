@@ -2,12 +2,12 @@ package ru.hse.edu.stalivanov.controllers;
 
 import ru.hse.edu.stalivanov.DriverManager;
 
-public class EmergencySituation
+public class EmergencySituationController
 {
     private DriverManager driverManager;
     private boolean turnedOn = false;
 
-    public EmergencySituation(DriverManager driverManager)
+    public EmergencySituationController(DriverManager driverManager)
     {
         this.driverManager = driverManager;
     }
@@ -18,8 +18,6 @@ public class EmergencySituation
         {
             for(var i : driverManager.getAlarms())
                 i.turnOn();
-            for(var i : driverManager.getCloseableWindows())
-                i.close();
             driverManager.getPhone().emergencyCall();
         }
         turnedOn = true;

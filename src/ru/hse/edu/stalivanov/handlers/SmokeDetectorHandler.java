@@ -1,16 +1,17 @@
 package ru.hse.edu.stalivanov.handlers;
 
-import ru.hse.edu.stalivanov.controllers.EmergencySituation;
-import ru.hse.edu.stalivanov.drivers.SmokeDetector;
-import ru.hse.edu.stalivanov.drivers.WashingSystem;
+import ru.hse.edu.stalivanov.controllers.EmergencySituationController;
+import ru.hse.edu.stalivanov.drivers.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class SmokeDetectorHandler implements Handler
 {
     private SmokeDetector smokeDetector;
-    private ArrayList<WashingSystem> washingSystems;
-    private EmergencySituation emergencySituation;
+    private List<WashingSystem> washingSystems;
+    private List<PowerSwitch> switches;
+    private List<AutoCloseableWidow> widows;
+    private EmergencySituationController emergencySituation;
     private boolean wasSmoke = false;
 
     public SmokeDetectorHandler()
@@ -25,8 +26,12 @@ public class SmokeDetectorHandler implements Handler
         if(isSmoke && !wasSmoke)
         {
             emergencySituation.turnOn();
-            for(var s : washingSystems)
-                s.turnOn();
+            for(var i : washingSystems)
+                i.turnOn();
+            for(var i : switches)
+                i.turnOff();
+            for(var i : widows)
+                i.close();
         }
         if(!isSmoke && wasSmoke)
         {

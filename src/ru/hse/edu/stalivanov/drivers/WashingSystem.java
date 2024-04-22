@@ -4,5 +4,5 @@ public interface WashingSystem extends Driver
 {
     void turnOn();
     void turnOff();
-    boolean turnedOn();
+    boolean isTurnedOn();
 }

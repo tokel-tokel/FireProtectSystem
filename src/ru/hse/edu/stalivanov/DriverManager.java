@@ -12,23 +12,13 @@ public class DriverManager
     private ArrayList<Alarm> alarms;
     private ArrayList<SwitchableAlarm> switchableAlarms;
     private ArrayList<AutoCloseableWidow> closeableWidows;
-    private ArrayList<WashingSystem> washingSystems;
     private Phone phone;
 
     private ArrayList<Updatable> updatableDevices;
 
     public DriverManager()
     {
-        SmokeDetector detector = new SmokeDetector()
-        {
-            @Override
-            public boolean isSmoke()
-            {
-                return false;
-            }
-        };
 
-        Supplier<Boolean> s = detector::isSmoke;
     }
 
     public Iterable<Alarm> getAlarms()
