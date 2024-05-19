@@ -8,15 +8,16 @@ import java.util.List;
 public class SmokeDetectorHandler implements Handler
 {
     private SmokeDetector smokeDetector;
-    private List<WashingSystem> washingSystems;
-    private List<PowerSwitch> switches;
-    private List<AutoCloseableWidow> widows;
+    private List<PreventSystem> preventSystems;
+    private List<SwitchablePreventSystem> switchablePreventSystems;
     private EmergencySituationController emergencySituation;
     private boolean wasSmoke = false;
 
-    public SmokeDetectorHandler()
+    public SmokeDetectorHandler(List<PreventSystem> prevSys, List<SwitchablePreventSystem> swPrevSys, EmergencySituationController emSit)
     {
-
+        preventSystems = prevSys.stream().toList();
+        switchablePreventSystems = swPrevSys.stream().toList();
+        emergencySituation = emSit;
     }
 
     @Override
@@ -26,17 +27,15 @@ public class SmokeDetectorHandler implements Handler
         if(isSmoke && !wasSmoke)
         {
             emergencySituation.turnOn();
-            for(var i : washingSystems)
-                i.turnOn();
-            for(var i : switches)
-                i.turnOff();
-            for(var i : widows)
-                i.close();
+            for(var s : preventSystems)
+                s.start();
+            for(var s : switchablePreventSystems)
+                s.start();
         }
         if(!isSmoke && wasSmoke)
         {
-            for(var s : washingSystems)
-                s.turnOff();
+            for(var s : switchablePreventSystems)
+                s.stop();
         }
         wasSmoke = isSmoke;
     }

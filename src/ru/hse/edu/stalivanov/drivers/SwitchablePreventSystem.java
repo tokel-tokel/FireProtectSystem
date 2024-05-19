@@ -1,5 +1,6 @@
 package ru.hse.edu.stalivanov.drivers;
 
-public interface SwitchablePreventSystem
+public interface SwitchablePreventSystem extends PreventSystem
 {
+    void stop();
 }
