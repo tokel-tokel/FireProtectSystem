@@ -1,20 +1,28 @@
 package ru.hse.edu.stalivanov;
 
+import ru.hse.edu.stalivanov.drivers.BufferedSmokeDetector;
+import ru.hse.edu.stalivanov.drivers.Updatable;
+
+import java.time.ZonedDateTime;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class MainCycle implements Runnable
+public class UpdateCycle implements Runnable
 {
-    private HandlerManager handlers;
     private AtomicBoolean running = new AtomicBoolean(false);
     private boolean realRunning = false;
+    private Collection<Updatable> toUpdate;
+    private int interval;
 
-    public MainCycle(HandlerManager handlers)
+    public UpdateCycle(Collection<Updatable> toUpdate, int interval)
     {
-        this.handlers = handlers;
+        this.toUpdate = new LinkedList<>(toUpdate);
+        this.interval = interval;
     }
 
     @Override
@@ -22,9 +30,24 @@ public class MainCycle implements Runnable
     {
         running.set(true);
         realRunning = true;
+        int delta = interval;
         while(running.get())
         {
-            handlers.handleAll();
+            long millis1 = ZonedDateTime.now().toInstant().toEpochMilli();
+            if(delta >= interval)
+            {
+                for(var u : toUpdate)
+                {
+                    u.update();
+                }
+                long millis2 = ZonedDateTime.now().toInstant().toEpochMilli();
+                delta = (int) (millis2 - millis1);
+            }
+            else
+            {
+                long millis2 = ZonedDateTime.now().toInstant().toEpochMilli();
+                delta += (int) (millis2 - millis1);
+            }
         }
         realRunning = false;
     }
@@ -60,7 +83,7 @@ public class MainCycle implements Runnable
             @Override
             public Boolean get() throws InterruptedException, ExecutionException
             {
-                while(!isDone()) ;
+                while(!isDone());
                 return true;
             }
 

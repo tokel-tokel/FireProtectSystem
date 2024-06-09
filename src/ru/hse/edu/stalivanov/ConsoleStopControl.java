@@ -11,17 +11,26 @@ public class ConsoleStopControl implements StopControl
     public void activate(MainManager manager)
     {
         this.manager = manager;
+        Thread thread = new Thread(this::listening);
+        thread.start();
     }
 
     private void listening()
     {
-        if(in.next().equalsIgnoreCase("stop"))
+        try
+        {
+            if(in.next().equalsIgnoreCase("stop"))
+            {
+                manager.stop();
+            }
+            else
+            {
+                listening();
+            }
+        }
+        catch(Exception e)
         {
             manager.stop();
-        }
-        else
-        {
-            listening();
         }
     }
 }

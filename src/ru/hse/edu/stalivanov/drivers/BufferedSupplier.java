@@ -7,9 +7,10 @@ public class BufferedSupplier<T> implements Updatable, Supplier<T>
     private T bufferedData;
     private Supplier<T> baseSupplier;
 
-    public BufferedSupplier(Supplier<T> baseSupplier)
+    public BufferedSupplier(Supplier<T> baseSupplier, T baseValue)
     {
         this.baseSupplier = baseSupplier;
+        bufferedData = baseValue;
     }
 
     @Override

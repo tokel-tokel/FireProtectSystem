@@ -7,7 +7,7 @@ public class BufferedSmokeDetector implements SmokeDetector, Updatable
 
     public BufferedSmokeDetector(SmokeDetector detector)
     {
-        bufIsSmoke = new BufferedSupplier<>(detector::isSmoke);
+        bufIsSmoke = new BufferedSupplier<>(detector::isSmoke,  false);
         driver = detector;
     }
 

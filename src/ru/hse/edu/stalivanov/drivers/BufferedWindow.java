@@ -7,7 +7,7 @@ public class BufferedWindow implements Window, Updatable
 
     public BufferedWindow(Window window)
     {
-        bufIsOpened = new BufferedSupplier<>(window::isOpened);
+        bufIsOpened = new BufferedSupplier<>(window::isOpened, false);
         driver = window;
     }
 

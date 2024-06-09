@@ -3,6 +3,7 @@ package ru.hse.edu.stalivanov.handlers;
 import ru.hse.edu.stalivanov.controllers.EmergencySituationController;
 import ru.hse.edu.stalivanov.drivers.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SmokeDetectorHandler implements Handler
@@ -13,10 +14,11 @@ public class SmokeDetectorHandler implements Handler
     private EmergencySituationController emergencySituation;
     private boolean wasSmoke = false;
 
-    public SmokeDetectorHandler(List<PreventSystem> prevSys, List<SwitchablePreventSystem> swPrevSys, EmergencySituationController emSit)
+    public SmokeDetectorHandler(SmokeDetector smDe, List<PreventSystem> prevSys, List<SwitchablePreventSystem> swPrevSys, EmergencySituationController emSit)
     {
-        preventSystems = prevSys.stream().toList();
-        switchablePreventSystems = swPrevSys.stream().toList();
+        smokeDetector = smDe;
+        preventSystems = new ArrayList<>(prevSys);
+        switchablePreventSystems = new ArrayList<>(swPrevSys);
         emergencySituation = emSit;
     }
 
@@ -30,7 +32,9 @@ public class SmokeDetectorHandler implements Handler
             for(var s : preventSystems)
                 s.start();
             for(var s : switchablePreventSystems)
+            {
                 s.start();
+            }
         }
         if(!isSmoke && wasSmoke)
         {

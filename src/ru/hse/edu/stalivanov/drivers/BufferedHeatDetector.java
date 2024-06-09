@@ -9,7 +9,7 @@ public class BufferedHeatDetector implements HeatDetector, Updatable
 
     public BufferedHeatDetector(HeatDetector detector)
     {
-        bufHeatMap = new BufferedSupplier<>(detector::getHeatMap);
+        bufHeatMap = new BufferedSupplier<>(detector::getHeatMap, null);
         base = detector;
     }
 

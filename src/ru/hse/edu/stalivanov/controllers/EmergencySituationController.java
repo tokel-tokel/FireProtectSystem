@@ -14,12 +14,10 @@ public class EmergencySituationController
 
     public void turnOn()
     {
-        if(!turnedOn)
-        {
-            for(var i : driverManager.getAlarms())
-                i.turnOn();
+        for(var i : driverManager.getAlarms())
+            i.start();
+        if(driverManager.getPhone() != null)
             driverManager.getPhone().emergencyCall();
-        }
         turnedOn = true;
     }
 
@@ -28,7 +26,7 @@ public class EmergencySituationController
         if(turnedOn)
         {
             for(var i : driverManager.getSwitchableAlarms())
-                i.turnOff();
+                i.stop();
         }
     }
 }
